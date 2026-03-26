@@ -1,0 +1,111 @@
+// assets
+import {
+  IconHome,
+  IconUser,
+  IconSettings,
+  IconBuildingCommunity,
+  IconChartLine,
+  IconChartBar,
+  IconLicense,
+  IconMessages,
+  IconNews,
+  IconListCheck,
+  IconBrandInstagram,
+  IconMessageCircle,
+  IconLogout,
+  IconTractor,
+  IconWindmill,
+  IconBoxPadding,
+} from '@tabler/icons';
+
+// constant
+const icons = {
+  IconHome,
+  IconUser,
+  IconSettings,
+  IconChartLine,
+  IconChartBar,
+  IconLicense,
+  IconBuildingCommunity,
+  IconMessages,
+  IconNews,
+  IconListCheck,
+  IconBrandInstagram,
+  IconMessageCircle,
+  IconLogout,
+  IconTractor,
+  IconWindmill,
+  IconBoxPadding,
+};
+
+// ==============================|| UTILITIES MENU ITEMS ||============================== //
+
+const manager = {
+  id: 'manager',
+  type: 'group',
+  titleName: true,
+  children: [
+    {
+      id: 'index',
+      title: 'Home',
+      type: 'item',
+      url: '/index',
+      icon: icons.IconHome,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'corretivas',
+      title: 'OS Corretivas',
+      type: 'item',
+      url: '/corretivas',
+      icon: icons.IconListCheck,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'proativas',
+      title: 'OS Proativas',
+      type: 'item',
+      url: '/proativas',
+      icon: icons.IconListCheck,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'preventivas',
+      title: 'OS Preventivas',
+      type: 'item',
+      url: '/preventivas',
+      icon: icons.IconListCheck,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'dashboard_directors',
+      title: 'Dashboard',
+      type: 'item',
+      url: '/dashboard_directors',
+      icon: icons.IconChartBar,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    }
+    // {
+    //   id: 'chamados_gerente',
+    //   title: 'OS Gerente',
+    //   type: 'item',
+    //   url: '/chamados_gerente',
+    //   icon: icons.IconListCheck,
+    //   breadcrumbs: false,
+    //   color: 'success',
+    //   variant: 'success',
+    // },
+  ],
+};
+
+export default manager;
