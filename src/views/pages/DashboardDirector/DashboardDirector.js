@@ -38,6 +38,7 @@ import { Chart } from 'react-google-charts';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import dashboardService from 'services/dashboardService';
+import ChecklistInspectionDashboard from './ChecklistInspectionDashboard';
 
 const DashboardDirector = () => {
     const [loading, setLoading] = useState(false);
@@ -65,7 +66,16 @@ const DashboardDirector = () => {
     
     // Unidade do usuário logado
     const userUnit = useSelector((state) => state.user.unit || '');
-    
+    const id_role = useSelector((state) => state.auth.user.perfil_id);
+    const showChecklistTab = id_role == 1;
+
+    // Evita ficar na aba Checklist se o perfil não tiver acesso
+    useEffect(() => {
+        if (!showChecklistTab && activeTab === 1) {
+            setActiveTab(0);
+        }
+    }, [showChecklistTab, activeTab]);
+
     // Função para mudar de aba
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
@@ -366,31 +376,33 @@ const DashboardDirector = () => {
                 </Grid>
             </Box>
 
-            {/* Tabs de navegação */}
-            <Paper sx={{ marginBottom: 3 }}>
-                <Tabs 
-                    value={activeTab} 
-                    onChange={handleTabChange}
-                    variant="fullWidth"
-                    sx={{
-                        '& .MuiTab-root': {
-                            backgroundColor: '#E0E0E0',
-                            color: '#666',
-                            '&.Mui-selected': {
-                                backgroundColor: '#F5F5F5',
-                                color: '#015641',
-                                fontWeight: 'bold'
+            {/* Tabs de navegação (Checklist só para perfil_id = 1) */}
+            {showChecklistTab && (
+                <Paper sx={{ marginBottom: 3 }}>
+                    <Tabs
+                        value={activeTab}
+                        onChange={handleTabChange}
+                        variant="fullWidth"
+                        sx={{
+                            '& .MuiTab-root': {
+                                backgroundColor: '#E0E0E0',
+                                color: '#666',
+                                '&.Mui-selected': {
+                                    backgroundColor: '#F5F5F5',
+                                    color: '#015641',
+                                    fontWeight: 'bold'
+                                }
                             }
-                        }
-                    }}
-                >
-                    <Tab label="Chamados" />
-                    <Tab label="Checklist" />
-                </Tabs>
-            </Paper>
+                        }}
+                    >
+                        <Tab label="Chamados" />
+                        <Tab label="Checklist" />
+                    </Tabs>
+                </Paper>
+            )}
 
             {/* Aba Chamados */}
-            {activeTab === 0 && (
+            {(!showChecklistTab || activeTab === 0) && (
                 <>
             {/* Filtros */}
             <Card sx={{ padding: 3, marginBottom: 3 }}>
@@ -507,32 +519,8 @@ const DashboardDirector = () => {
                 </>
             )}
 
-            {/* Aba Checklist */}
-            {activeTab === 1 && (
-                <Card sx={{ padding: 3 }}>
-                    <Box sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        alignItems: 'center',
-                        width: '100%',
-                        minHeight: 636
-                    }}>
-                        <iframe 
-                            title="bi_checklistv1" 
-                            width="100%" 
-                            height="636" 
-                            src="https://app.powerbi.com/view?r=eyJrIjoiMjQyMjIwZWQtMmM5Zi00MDBiLTgwMmYtNDFlZGVjZmQzNTcwIiwidCI6ImYwNzEyMzAyLTc4MTktNGQ1NC04MjBhLWUyOTAwMTlhNmJmNSJ9" 
-                            frameBorder="0" 
-                            allowFullScreen={true}
-                            style={{
-                                border: 'none',
-                                borderRadius: '8px',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                            }}
-                        />
-                    </Box>
-                </Card>
-            )}
+            {/* Aba Checklist — dashboard InspecPro (vw_bi_checklist); só perfil_id = 1 */}
+            {showChecklistTab && activeTab === 1 && <ChecklistInspectionDashboard />}
 
             {/* Snackbar para erros */}
             <Snackbar 

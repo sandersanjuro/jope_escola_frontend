@@ -177,6 +177,19 @@ class DashboardService {
             throw error;
         }
     }
+
+    /**
+     * Dashboard de inspeção (vw_bi_checklist).
+     */
+    async getChecklistBiDashboard() {
+        try {
+            const response = await this.api.get('/dashboard/checklist-bi');
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar dashboard checklist BI:', error);
+            throw error;
+        }
+    }
 }
 
 export default new DashboardService();

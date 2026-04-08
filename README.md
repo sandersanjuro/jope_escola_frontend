@@ -1,68 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# JOPE Escola — Frontend
 
-## Available Scripts
+Versão do projeto: **2.0.0** (início do versionamento semântico adotado para este repositório; valor anterior em `package.json` foi alinhado a esta linha).
 
-In the project directory, you can run:
+## Changelog — 2.0.0
 
-### `node scripts/start.js`
+### Novidades
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Dashboard de diretor — aba Checklist**: substituição do embed do Power BI por um dashboard interno (**InspecPro**), alinhado ao layout de referência (KPIs, arco de percentual, gráfico de barras por unidade, painel com seletor e lista de pendentes, tema claro/escuro).
+- **Integração com API**: método `getChecklistBiDashboard()` em `dashboardService`, consumindo `GET /api/dashboard/checklist-bi`.
+- **Gráfico**: ApexCharts com alternância barras verticais/horizontais; até **13 unidades** sorteadas aleatoriamente no gráfico quando há mais unidades disponíveis; botão **Sortear outras** para novo sorteio sem recarregar a página; clique na barra seleciona a unidade no painel lateral.
+- **Controle de acesso**: a aba “Checklist” e o bloco de abas só são exibidos para usuários com **`perfil_id === 1`** (`state.auth.user.perfil_id`).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Impactos operacionais
 
-### `npm test`
+- **Dependência de API**: a aba Checklist só funciona com a API na versão que expõe `/dashboard/checklist-bi` e com banco checklist configurado no servidor.
+- **Autenticação**: as requisições usam o mesmo token JWT das demais rotas do dashboard.
+- **Experiência do usuário**: perfis diferentes de 1 deixam de ver a aba Checklist; o fluxo da aba **Chamados** permanece como antes, sem barra de abas quando o checklist está oculto.
+- **Pacotes**: continuação do uso de **react-apexcharts** já presente no projeto; não foi adicionado Chart.js.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Scripts
 
-### `npm run build`
+- `npm start` — ambiente de desenvolvimento  
+- `npm run build` — build de produção  
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Consulte também o README da API correspondente para variáveis de ambiente e requisitos da view `vw_bi_checklist`.
