@@ -10,6 +10,7 @@ import { shouldForwardProp } from '@mui/system';
 
 // project imports
 import { getUnit } from 'services/unit';
+import { information } from 'services/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
 const OutlineInputStyle = styled(Select, { shouldForwardProp })(({ theme }) => ({
@@ -64,29 +65,36 @@ const SearchSection = () => {
         ));
     }
 
-    const handleUnitChange = (e) => {
+    const handleUnitChange = async (e) => {
         const selectedId = e.target.value;
-        // acha a unidade correspondente pelo id
-        const selectedUnit = optionsUnit.find((u) => u.id === selectedId);
+        // MUI Select pode devolver string; ids da API costumam ser número
+        const selectedUnit = optionsUnit.find(
+            (u) => u.id === selectedId || String(u.id) === String(selectedId)
+        );
 
         dispatch({ type: 'SET_LOADING', payload: true });
-        // salva o id normalmente
         dispatch({ type: 'SET_UNIT_USER', payload: selectedId });
-        // salva o unidade_modelo
         dispatch({
             type: 'SET_UNIT_MODELO_USER',
             payload: selectedUnit ? selectedUnit.unidade_modelo : null
         });
 
-        localStorage.setItem('unit', selectedId);
+        localStorage.setItem('unit', String(selectedId));
         localStorage.setItem(
             'unidade_modelo',
-            selectedUnit ? selectedUnit.unidade_modelo : ''
+            selectedUnit != null && selectedUnit.unidade_modelo !== undefined && selectedUnit.unidade_modelo !== ''
+                ? String(selectedUnit.unidade_modelo)
+                : ''
         );
 
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
+        try {
+            const res = await information();
+            dispatch({ type: 'SET_LOGIN', payload: res.data });
+        } catch (err) {
+            console.error('Erro ao atualizar sessão após troca de unidade:', err);
+        } finally {
+            dispatch({ type: 'SET_LOADING', payload: false });
+        }
     };
 
     // Adiciona um listener para o evento load da janela
