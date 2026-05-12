@@ -97,7 +97,7 @@ const manager = {
     }
     // {
     //   id: 'chamados_gerente',
-    //   title: 'OS Gerente',
+    //   title: 'OS Escola',
     //   type: 'item',
     //   url: '/chamados_gerente',
     //   icon: icons.IconListCheck,

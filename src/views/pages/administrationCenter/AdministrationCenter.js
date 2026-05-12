@@ -27,6 +27,11 @@ export default function AdministrationCenter() {
                             title: 'Exportação Chamados',
                             icon: <IconBuildingCommunity size={100} />,
                             url: '/exportacao_chamados'
+                        },
+                        {
+                            title: 'Dias criação chamados',
+                            icon: <IconCalendar size={100} />,
+                            url: '/dias_criacao_chamados'
                         }
                     ]}
                 />
@@ -81,6 +86,11 @@ export default function AdministrationCenter() {
                             title: 'Problemas',
                             icon: <IconWindmill size={100} />,
                             url: '/tipo_problemas'
+                        },
+                        {
+                            title: 'Dias criação chamados',
+                            icon: <IconCalendar size={100} />,
+                            url: '/dias_criacao_chamados'
                         }
                     ]}
                 />

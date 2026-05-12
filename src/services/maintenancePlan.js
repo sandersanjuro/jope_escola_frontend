@@ -1,4 +1,5 @@
 import { app } from './Api';
+import { appblob } from './ApiBlob';
 
 const getResourceMaintenancePlan = async (idUnit = '') => {
   return app.get(`get_resource_maintenance_plan?idUnit=${idUnit}`);
@@ -33,6 +34,11 @@ const changeStatus = async (id) => {
   return app.put(`/change_status_maintenance_plan/${id}`);
 };
 
+/** Corpo JSON: filtros do relatório de planos + OS preventivas vinculadas */
+const exportMaintenancePlanReport = async (payload) => {
+  return appblob.post('maintenance_plan_report_export', payload);
+};
+
 export {
   getResourceMaintenancePlan,
   postMaintenancePlan,
@@ -42,4 +48,5 @@ export {
   getMaintenancePlanPerId,
   getTeamsByTypeOs,
   changeStatus,
+  exportMaintenancePlanReport,
 };

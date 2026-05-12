@@ -27,6 +27,7 @@ import Rotina from 'views/pages/Rotina/Rotina';
 import Operating from 'views/pages/Operating/Operating';
 import GridOperating from 'views/pages/Operating/GridOperating';
 import MaintenancePlan from 'views/pages/MaitenancePlan/MaintenancePlan';
+import MaintenancePlanReport from 'views/pages/MaitenancePlan/MaintenancePlanReport';
 import GridSla from 'views/pages/Sla/GridSla';
 import Sla from 'views/pages/Sla/Sla';
 import GridCalendar from 'views/pages/Calendar/GridCalendar';
@@ -36,6 +37,7 @@ import FinalTask from 'views/pages/Task/FinalTask';
 import TabTask from 'views/pages/Task/TabTask';
 import ConfigurationUnit from 'views/pages/ConfigurationUnit/ConfigurationUnit';
 import AdministrationCenter from 'views/pages/administrationCenter/AdministrationCenter';
+import RotaUnidadeManage from 'views/pages/RotaUnidade/RotaUnidadeManage';
 import Logs from 'views/pages/Logs/Logs';
 import TypeOs from 'views/pages/TypeOS/TypeOs';
 import GridTypeOs from 'views/pages/TypeOS/GridTypeOs';
@@ -351,6 +353,14 @@ const MainRoutes = {
             )
         },
         {
+            path: '/relatorio_plano_manutencao',
+            element: (
+                <AuthRouter>
+                    <MaintenancePlanReport />
+                </AuthRouter>
+            )
+        },
+        {
             path: '/slas',
             element: (
                 <AuthRouter>
@@ -435,6 +445,14 @@ const MainRoutes = {
             element: (
                 <AuthRouter>
                     <AdministrationCenter />
+                </AuthRouter>
+            )
+        },
+        {
+            path: '/dias_criacao_chamados',
+            element: (
+                <AuthRouter>
+                    <RotaUnidadeManage />
                 </AuthRouter>
             )
         },

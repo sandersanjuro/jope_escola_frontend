@@ -82,7 +82,7 @@ const GridTaskManager = () => {
     const idNatureOfOperation = useSelector((state) => state.task.idNatureOfOperation || '');
     const moduleOs = 4;
     const modulePost = '/novo_chamado_gerente';
-    const titleModule = 'OS GERENTE';
+    const titleModule = 'OS Escola';
     const [tasks, setTasks] = React.useState([]);
     const [options, setOptions] = React.useState(initialStateOptions);
     const [filterAvanced, setFilterAvanced] = React.useState(false);

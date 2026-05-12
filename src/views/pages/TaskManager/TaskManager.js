@@ -138,7 +138,7 @@ const TaskManager = ({ ...others }) => {
     };
     const path = window.location.pathname;
     const moduleOs = 4;
-    const titleModule = 'OS GERENTE';
+    const titleModule = 'OS Escola';
     const navigate = useNavigate();
     const theme = useTheme();
     const params = useParams();
