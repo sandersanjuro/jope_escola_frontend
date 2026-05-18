@@ -47,6 +47,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { gridSpacing } from 'store/constant';
 import useScriptRef from 'hooks/useScriptRef';
+import { resolveMultiFilterParam } from 'utils/taskFilterParams';
 
 // ==============================|| Index ||============================== //
 const GridProactive = () => {
@@ -180,9 +181,6 @@ const GridProactive = () => {
                         payload: allSelected,
                         objectTypeOs: allSelected,
                     });
-    
-                    // Atualizando o estado de idTypeOs com todos os valores selecionados
-                    setIdTypeOs(allSelected);  // Supondo que você tenha um estado idTypeOs
                 }
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
@@ -223,24 +221,6 @@ const GridProactive = () => {
         setIdDeleteTask(idTask);
         setOpenModalDelete(true);
     };
-
-    function setIdStatus() {
-        let idStatusNew = [];
-        objectStatus.forEach((element) => {
-            let valueId = parseInt(element.split(' -')[0]);
-            idStatusNew = [...idStatusNew, valueId];
-        });
-        return idStatusNew;
-    }
-
-    function setIdTypeOs() {
-        let idStatusNew = [];
-        objectTypeOs.forEach((element) => {
-            let valueId = parseInt(element.split(' -')[0]);
-            idStatusNew = [...idStatusNew, valueId];
-        });
-        return idStatusNew;
-    }
 
     const resetTask = () => {
         try {
@@ -291,8 +271,8 @@ const GridProactive = () => {
     }
 
     function getAllTasks(pageNumber = page, statusIdAttr, typeOsIdAttr, natureOfOperationIdAttr, OsAttr, proactive = 1) {
-        let statuId = statusIdAttr === '' ? statusIdAttr : idStatus ? setIdStatus() : '';
-        let typeOsId = typeOsIdAttr === '' ? typeOsIdAttr : idTypeOs ? setIdTypeOs() : '';
+        const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
+        const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
         let osNumber = OsAttr === '' ? OsAttr : os;
         let natureOfOperationId =
             natureOfOperationIdAttr === ''
@@ -389,8 +369,8 @@ const GridProactive = () => {
     ) => {
         try {
             setLoading(true);
-            let statuId = statusIdAttr === '' ? statusIdAttr : idStatus ? setIdStatus() : '';
-            let typeOsId = typeOsIdAttr === '' ? typeOsIdAttr : idTypeOs ? setIdTypeOs() : '';
+            const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
+            const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
             let osNumber = OsAttr === '' ? OsAttr : os;
             let natureOfOperationId = natureOfOperationIdAttr === '' ? natureOfOperationIdAttr : idNatureOfOperation ? idNatureOfOperation.id : ''
                 

@@ -82,6 +82,7 @@ import { getTypeOsUser } from 'services/typeOs';
 import UpList from '@mui/icons-material/ArrowUpward'
 import DownList from '@mui/icons-material/ArrowDownward'
 import { useDropzone } from 'react-dropzone';
+import { resolveMultiFilterParam } from 'utils/taskFilterParams';
 
 // ==============================|| Index ||============================== //
 const GridTask = () => {
@@ -247,9 +248,6 @@ const GridTask = () => {
                         payload: allSelected,
                         objectTypeOs: allSelected,
                     });
-    
-                    // Atualizando o estado de idTypeOs com todos os valores selecionados
-                    setIdTypeOs(allSelected);  // Supondo que você tenha um estado idTypeOs
                 }
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
@@ -360,24 +358,6 @@ const GridTask = () => {
         }
     };
 
-    function setIdStatus() {
-        let idStatusNew = [];
-        objectStatus.forEach((element) => {
-            let valueId = parseInt(element.split(' -')[0]);
-            idStatusNew = [...idStatusNew, valueId];
-        });
-        return idStatusNew;
-    }
-
-    function setIdTypeOs() {
-        let idStatusNew = [];
-        objectTypeOs.forEach((element) => {
-            let valueId = parseInt(element.split(' -')[0]);
-            idStatusNew = [...idStatusNew, valueId];
-        });
-        return idStatusNew;
-    }
-
     const handleChangeRowsPerPage = (event) => {
         dispatch({
             type: 'SET_ROWS_PER_PAGE_TASK',
@@ -413,10 +393,8 @@ const GridTask = () => {
         repactuationFilterAttr
     ) {
         setLoading(true);
-        let statuId =
-        statusIdAttr === '' ? statusIdAttr : idStatus ? setIdStatus() : '';
-        let typeOsId =
-        typeOsIdAttr === '' ? typeOsIdAttr : idTypeOs ? setIdTypeOs() : '';
+        const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
+        const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
         let osNumber = OsAttr === '' ? OsAttr : os;
         let natureOfOperationId = moduleOs == 1 ? 1 : 11
        
@@ -757,10 +735,8 @@ const GridTask = () => {
     ) => {
         try {
             setLoading(true);
-            let statuId =
-            statusIdAttr === '' ? statusIdAttr : idStatus ? setIdStatus() : '';
-            let typeOsId =
-            typeOsIdAttr === '' ? typeOsIdAttr : idTypeOs ? setIdTypeOs() : '';
+            const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
+            const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
             let osNumber = OsAttr === '' ? OsAttr : os;
             let natureOfOperationId = moduleOs == 1 ? 1 : 11
             let typeEquipamentId =
