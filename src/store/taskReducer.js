@@ -96,7 +96,7 @@ const taskReducer = (state = initialState, actions) => {
         idStatus: [],
         idUnit: '',
         idTypeOs: [],
-        idNatureOfOperation: actions.idNatureOfOperation,
+        idNatureOfOperation: actions.idNatureOfOperation ?? '',
         os: '',
         objectStatus: [],
         page: 1,

@@ -270,18 +270,25 @@ const GridProactive = () => {
         return textoAjustado;
     }
 
+    const resolveNatureOfOperationId = (natureOfOperationIdAttr) => {
+        if (natureOfOperationIdAttr !== '' && natureOfOperationIdAttr !== undefined && natureOfOperationIdAttr !== null) {
+            return natureOfOperationIdAttr;
+        }
+        if (moduleOs === 2) {
+            return 11;
+        }
+        if (!idNatureOfOperation) {
+            return '';
+        }
+        const nature = Array.isArray(idNatureOfOperation) ? idNatureOfOperation[0] : idNatureOfOperation;
+        return nature?.id ?? '';
+    };
+
     function getAllTasks(pageNumber = page, statusIdAttr, typeOsIdAttr, natureOfOperationIdAttr, OsAttr, proactive = 1) {
         const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
         const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
         let osNumber = OsAttr === '' ? OsAttr : os;
-        let natureOfOperationId =
-            natureOfOperationIdAttr === ''
-                ? natureOfOperationIdAttr
-                : moduleOs === 2
-                ? 11
-                : idNatureOfOperation
-                ? idNatureOfOperation.id
-                : '';
+        const natureOfOperationId = resolveNatureOfOperationId(natureOfOperationIdAttr);
         getTasks(
             pageNumber,
             rowsPerPage,
@@ -372,7 +379,7 @@ const GridProactive = () => {
             const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
             const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
             let osNumber = OsAttr === '' ? OsAttr : os;
-            let natureOfOperationId = natureOfOperationIdAttr === '' ? natureOfOperationIdAttr : idNatureOfOperation ? idNatureOfOperation.id : ''
+            let natureOfOperationId = resolveNatureOfOperationId(natureOfOperationIdAttr);
                 
             getTasksReport(
                 general,
@@ -1009,12 +1016,9 @@ const GridProactive = () => {
                                         onClick={(e) => [
                                             dispatch({
                                                 type: 'SET_CLEAR_TASK_FILTER',
-                                                idNatureOfOperation:
-                                                    moduleOs === 1
-                                                        ? ''
-                                                        : options.natureOfOperation.filter((desc) => desc.id === 11),
+                                                idNatureOfOperation: '',
                                             }),
-                                            getAllTasks('', '', moduleOs === 1 ? '' : 11, '', '', '', ''),
+                                            getAllTasks(1, '', '', '', '', 1),
                                         ]}
                                     >
                                         Limpar

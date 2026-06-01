@@ -382,6 +382,21 @@ const GridTask = () => {
         }
     };
 
+    const resolveNatureOfOperationId = (natureOfOperationIdAttr) => {
+        if (natureOfOperationIdAttr !== '' && natureOfOperationIdAttr !== undefined && natureOfOperationIdAttr !== null) {
+            return natureOfOperationIdAttr;
+        }
+        if (idNatureOfOperation) {
+            const nature = Array.isArray(idNatureOfOperation) ? idNatureOfOperation[0] : idNatureOfOperation;
+            if (nature?.id != null) {
+                return nature.id;
+            }
+        }
+        if (moduleOs == 1) return 1;
+        if (moduleOs == 2) return 11;
+        return '';
+    };
+
     function getAllTasks(
         pageNumber = page,
         statusIdAttr,
@@ -396,7 +411,7 @@ const GridTask = () => {
         const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
         const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
         let osNumber = OsAttr === '' ? OsAttr : os;
-        let natureOfOperationId = moduleOs == 1 ? 1 : 11
+        const natureOfOperationId = resolveNatureOfOperationId(natureOfOperationIdAttr);
        
         let typeEquipamentId =
         typeEquipamentIdAttr === ''
@@ -738,7 +753,7 @@ const GridTask = () => {
             const statuId = resolveMultiFilterParam(statusIdAttr, objectStatus);
             const typeOsId = resolveMultiFilterParam(typeOsIdAttr, objectTypeOs);
             let osNumber = OsAttr === '' ? OsAttr : os;
-            let natureOfOperationId = moduleOs == 1 ? 1 : 11
+            let natureOfOperationId = resolveNatureOfOperationId(natureOfOperationIdAttr);
             let typeEquipamentId =
             typeEquipamentIdAttr === ''
                 ? typeEquipamentIdAttr
@@ -2006,11 +2021,20 @@ const GridTask = () => {
                                             dispatch({
                                                 type: 'SET_CLEAR_TASK_FILTER',
                                                 idNatureOfOperation:
-                                                    moduleOs === 1
+                                                    moduleOs === 1 || moduleOs === 3
                                                         ? ''
-                                                        : options.natureOfOperation.filter((desc) => desc.id === 11),
+                                                        : options.natureOfOperation.find((desc) => desc.id === 11) || '',
                                             }),
-                                            getAllTasks('', '', moduleOs === 1 ? '' : 11, '', '', '', '', 'TODOS'),
+                                            getAllTasks(
+                                                1,
+                                                '',
+                                                '',
+                                                moduleOs === 1 ? '' : moduleOs === 3 ? '' : 11,
+                                                '',
+                                                '',
+                                                '',
+                                                'TODOS'
+                                            ),
                                         ]}
                                     >
                                         Limpar
