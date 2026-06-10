@@ -36,7 +36,8 @@ import Tooltip from '@mui/material/Tooltip';
 import GroupIcon from '@mui/icons-material/Group';
 import { MENU_OPEN } from 'store/actions';
 import ModalFilter from 'components/Modal/ModalFilter';
-import { getUsers, deleteUser } from 'services/users';
+import { Switch } from '@mui/material';
+import { getUsers, deleteUser, toggleActiveUser } from 'services/users';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -65,6 +66,7 @@ export default function GridUsers() {
     const page = useSelector((state) => state.users.page);
     const nameUser = useSelector((state) => state.users.nameUser);
     const rowsPerPage = useSelector((state) => state.users.rowsPerPage);
+    const currentUserId = useSelector((state) => state.auth.user.id);
     const [users, setUsers] = React.useState([]);
     const [success, setSuccess] = React.useState('');
     const [error, setError] = React.useState('');
@@ -103,6 +105,24 @@ export default function GridUsers() {
         let nameUserFilter = nameUserAttr === '' ? nameUserAttr : nameUser;
         getUsers(page + 1, rowsPerPage, nameUserFilter).then((resp) => setUsers(resp.data));
     }
+    const handleToggleActive = (id) => {
+        toggleActiveUser(id)
+            .then((resp) => {
+                getAllUsers();
+                setError('');
+                setSuccess(resp.data.success);
+                setTimeout(() => {
+                    setSuccess('');
+                }, 3000);
+            })
+            .catch((e) => {
+                setSuccess('');
+                setError(e.response?.data?.error || 'Não foi possível alterar o status do usuário.');
+                setTimeout(() => {
+                    setError('');
+                }, 4000);
+            });
+    };
     const deleteUserById = () => {
         handleCloseModal();
         deleteUser(idDestroyUser)
@@ -245,6 +265,7 @@ export default function GridUsers() {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead style={{ backgroundColor: '#00008B' }}>
                         <TableRow>
+                            <StyledTableCell style={{ backgroundColor: '#c0c0c0', color: 'black' }}>Ativar/Desativar</StyledTableCell>
                             <StyledTableCell style={{ backgroundColor: '#c0c0c0', color: 'black' }}>Nome</StyledTableCell>
                             <StyledTableCell style={{ backgroundColor: '#c0c0c0', color: 'black' }}>Perfil</StyledTableCell>
                             <StyledTableCell style={{ backgroundColor: '#c0c0c0', color: 'black' }}>Ações</StyledTableCell>
@@ -254,23 +275,33 @@ export default function GridUsers() {
                         {users.data &&
                             users.data.map((row) => (
                                 <StyledTableRow key={row.id}>
+                                    <StyledTableCell>
+                                        <Switch
+                                            checked={!!row.ativo}
+                                            onChange={() => handleToggleActive(row.id)}
+                                            disabled={row.id === currentUserId}
+                                            inputProps={{ 'aria-label': 'Ativar ou desativar usuário' }}
+                                        />
+                                    </StyledTableCell>
                                     <StyledTableCell style={{ color: 'black' }}>{row.name}</StyledTableCell>
                                     <StyledTableCell style={{ color: 'black' }}>{row.perfil}</StyledTableCell>
-                                    <Tooltip title="Visualizar">
-                                        <IconButton onClick={() => navigate({ pathname: `/usuario/${row.id}/view` })}>
-                                            <ViewIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Editar">
-                                        <IconButton onClick={() => navigate({ pathname: `/usuario/${row.id}/edit` })}>
-                                            <EditIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Excluir">
-                                        <IconButton onClick={() => handleOpenDestroy(row.id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <StyledTableCell>
+                                        <Tooltip title="Visualizar">
+                                            <IconButton onClick={() => navigate({ pathname: `/usuario/${row.id}/view` })}>
+                                                <ViewIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Editar">
+                                            <IconButton onClick={() => navigate({ pathname: `/usuario/${row.id}/edit` })}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Excluir">
+                                            <IconButton onClick={() => handleOpenDestroy(row.id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             ))}
                     </TableBody>
@@ -278,7 +309,7 @@ export default function GridUsers() {
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, 100]}
-                                colSpan={3}
+                                colSpan={4}
                                 count={users.total}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

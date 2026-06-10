@@ -8,6 +8,9 @@ const getUsers = async (page, qtdPerPage, nameUser) => {
 const deleteUser = async (id) => {
   return app.delete(`user/${id}`);
 };
+const toggleActiveUser = async (id) => {
+  return app.put(`active_user/${id}`);
+};
 const getResourceUser = async () => {
   return app.get(`get_resource_user`);
 };
@@ -38,6 +41,7 @@ const getAllUsers = async (page = '', qtdPerPage = '', perfil_id = '') => {
 export {
   getUsers,
   deleteUser,
+  toggleActiveUser,
   getResourceUser,
   getUserPerId,
   updateUser,
