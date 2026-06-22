@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import RecipeReviewCard from 'components/RecipeViewCard/RecipeViewCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { cancelTask, destroy, getResourceTask, getTasks, getTasksReport, initialAttendance, reopenTask, reset } from 'services/task';
+import { cancelTask, destroy, getResourceTask, getTasks, getTasksReport, initialAttendance, reopenTask, reset, updateClassificacaoProativa } from 'services/task';
 import Tasks from './Tasks';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -415,6 +415,27 @@ const GridProactive = () => {
     const handleInitialTask = (idTask) => {
         setIdInitialAttendance(idTask);
         setOpenModalInitialAttendance(true);
+    };
+
+    const handleClassificacaoProativaChange = (taskId, value) => {
+        const previousTasks = tasks;
+        setTasks((current) => ({
+            ...current,
+            data: current.data.map((task) =>
+                task.id === taskId ? { ...task, classificacao_proativa: value } : task
+            )
+        }));
+
+        updateClassificacaoProativa(taskId, value)
+            .then((resp) => {
+                setSuccess(resp.data.success || 'Classificação atualizada.');
+                setTimeout(() => setSuccess(''), 2000);
+            })
+            .catch((e) => {
+                setTasks(previousTasks);
+                setError(e.response?.data?.error || 'Erro ao atualizar classificação.');
+                setTimeout(() => setError(''), 3000);
+            });
     };
 
     const confirmInitialAttendance = (description) => {
@@ -1071,6 +1092,9 @@ const GridProactive = () => {
                                 handleInitialTask={handleInitialTask}
                                 onDelete={handleOpenDelete}
                                 handleOpenReset={handleOpenReset}
+                                onClassificacaoProativaChange={
+                                    id_role === 1 ? handleClassificacaoProativaChange : undefined
+                                }
                             />
                         </>
                     )}

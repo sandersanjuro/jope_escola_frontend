@@ -171,6 +171,13 @@ const repactuation = async (data, id) => {
 const reset = async (data, id) => {
   return app.post(`reset_task/${id}`, data);
 };
+
+const updateClassificacaoProativa = async (id, classificacaoProativa) => {
+  return app.patch(`task/${id}/classificacao_proativa`, {
+    classificacao_proativa: classificacaoProativa || null
+  });
+};
+
 export {
   getResourceTask,
   postTask,
@@ -201,5 +208,6 @@ export {
   getTasksReport,
   destroy,
   repactuation,
-  reset
+  reset,
+  updateClassificacaoProativa
 };

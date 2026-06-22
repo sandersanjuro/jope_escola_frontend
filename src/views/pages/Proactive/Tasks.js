@@ -1,4 +1,4 @@
-import { Button, Chip, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import { Button, Chip, Grid, IconButton, Tooltip, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import RecipeReviewCard from 'components/RecipeViewCard/RecipeViewCard';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReopenIcon from '@mui/icons-material/Autorenew';
@@ -185,6 +185,33 @@ export default function renderTasks(props) {
                                 <b>Tipo OS : </b>
                                 {desc.tipo_os}
                             </Typography>
+                            {props.moduleOs === 3 && id_role === 1 && props.onClassificacaoProativaChange && (
+                                <Box
+                                    sx={{ mt: 1 }}
+                                    onClick={(e) => e.stopPropagation()}
+                                    onMouseDown={(e) => e.stopPropagation()}
+                                >
+                                    <FormControl fullWidth size="small" variant="outlined">
+                                        <InputLabel id={`classificacao-proativa-label-${desc.id}`}>
+                                            Apontamento / Ocorrência
+                                        </InputLabel>
+                                        <Select
+                                            labelId={`classificacao-proativa-label-${desc.id}`}
+                                            label="Apontamento / Ocorrência"
+                                            value={desc.classificacao_proativa || ''}
+                                            onChange={(e) =>
+                                                props.onClassificacaoProativaChange(desc.id, e.target.value || null)
+                                            }
+                                        >
+                                            <MenuItem value="">
+                                                <em>Nenhuma</em>
+                                            </MenuItem>
+                                            <MenuItem value="apontamento">Apontamento</MenuItem>
+                                            <MenuItem value="ocorrencia">Ocorrência</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            )}
                         </>
                     }
                     contentSecondary={

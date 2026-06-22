@@ -1,6 +1,23 @@
 # JOPE Escola — Frontend
 
-Versão do projeto: **2.0.0** (início do versionamento semântico adotado para este repositório; valor anterior em `package.json` foi alinhado a esta linha).
+Versão do projeto: **2.0.1**
+
+## Changelog — 2.0.1
+
+### Novidades
+
+- **Proativas — classificação Apontamento / Ocorrência**: select nos cards da grade de proativas (`GridProactive` / `Tasks`), visível apenas para **ADM** (`perfil_id === 1`); atualização via `PATCH task/{id}/classificacao_proativa` com feedback otimista.
+- **Filtros múltiplos de OS**: utilitário `taskFilterParams.js` e correção em `GridTask` e `GridProactive` para filtros de status e tipo de OS com múltiplos valores.
+- **Relatório plano de manutenção preventiva**: página `/relatorio_plano_manutencao` com filtros, serviço dedicado e item no menu Administrações.
+- **Dias de criação de chamados**: página `/dias_criacao_chamados` para configurar dias da rota por unidade (menu Administrações).
+
+### Impactos operacionais
+
+- **Dependência de API**: classificação e novos relatórios exigem API **2.0.1** com migration `classificacao_proativa` aplicada.
+- **Permissões**: apenas perfil **1** altera Apontamento/Ocorrência nos cards; demais perfis visualizam os cards sem o campo.
+- **Relatórios exportados**: a coluna `apontamento_ocorrencia` passa a aparecer nos exports do sistema após atualização da API.
+
+---
 
 ## Changelog — 2.0.0
 

@@ -143,11 +143,11 @@ const User = ({ ...others }) => {
                     name: Yup.string().max(50, 'Permitido máximo de 50 caracteres').trim().required('Nome obrigatório'),
                     sla_atendimento: Yup.number()
                         .positive('Digite um número positivo')
-                        .max(900, 'máxima permitida: 900 horas')
+                        .max(100000, 'máxima permitida: 100000 horas')
                         .required('Hora inicial obrigatória'),
                     sla_solucao: Yup.number()
                         .positive('Digite um número positivo')
-                        .max(900, 'Hora máxima permitida: 900 horas')
+                        .max(100000, 'Hora máxima permitida: 100000 horas')
                         .required('Hora inicial obrigatória'),
                     prioridade: Yup.number().required('Prioridade é obrigatória'),
                     business: Yup.number().required('Negócio é obrigatório'),
