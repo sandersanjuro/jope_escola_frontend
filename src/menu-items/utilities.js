@@ -16,6 +16,7 @@ import {
   IconTractor,
   IconWindmill,
   IconBoxPadding,
+  IconFolder,
 } from '@tabler/icons';
 
 // constant
@@ -36,6 +37,7 @@ const icons = {
   IconTractor,
   IconWindmill,
   IconBoxPadding,
+  IconFolder,
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -81,6 +83,16 @@ const utilities = {
       type: 'item',
       url: '/preventivas',
       icon: icons.IconListCheck,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'jope_driver',
+      title: 'Jope Driver',
+      type: 'item',
+      url: '/jope_driver',
+      icon: icons.IconFolder,
       breadcrumbs: false,
       color: 'success',
       variant: 'success',

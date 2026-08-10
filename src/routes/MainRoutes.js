@@ -38,6 +38,7 @@ import TabTask from 'views/pages/Task/TabTask';
 import ConfigurationUnit from 'views/pages/ConfigurationUnit/ConfigurationUnit';
 import AdministrationCenter from 'views/pages/administrationCenter/AdministrationCenter';
 import RotaUnidadeManage from 'views/pages/RotaUnidade/RotaUnidadeManage';
+import JopeDriver from 'views/pages/JopeDriver/JopeDriver';
 import Logs from 'views/pages/Logs/Logs';
 import TypeOs from 'views/pages/TypeOS/TypeOs';
 import GridTypeOs from 'views/pages/TypeOS/GridTypeOs';
@@ -453,6 +454,14 @@ const MainRoutes = {
             element: (
                 <AuthRouter>
                     <RotaUnidadeManage />
+                </AuthRouter>
+            )
+        },
+        {
+            path: '/jope_driver',
+            element: (
+                <AuthRouter>
+                    <JopeDriver />
                 </AuthRouter>
             )
         },

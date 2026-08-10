@@ -18,6 +18,7 @@ import {
   IconWindmill,
   IconBoxPadding,
   IconFileReport,
+  IconFolder,
 } from '@tabler/icons';
 
 // constant
@@ -38,7 +39,8 @@ const icons = {
   IconTractor,
   IconWindmill,
   IconBoxPadding,
-  IconFileReport
+  IconFileReport,
+  IconFolder,
 };
 
 // função que retorna o menu de acordo com o negócio
@@ -130,6 +132,16 @@ const getAdmMenu = (negocio_id) => {
       type: 'item',
       url: '/task_pdf',
       icon: icons.IconFileReport,
+      breadcrumbs: false,
+      color: 'success',
+      variant: 'success',
+    },
+    {
+      id: 'jope_driver',
+      title: 'Jope Driver',
+      type: 'item',
+      url: '/jope_driver',
+      icon: icons.IconFolder,
       breadcrumbs: false,
       color: 'success',
       variant: 'success',
