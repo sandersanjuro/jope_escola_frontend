@@ -280,11 +280,16 @@ const Task = ({ ...others }) => {
                 let modulePath = path.split('/')[1];
                 return navigate({ pathname: `/${modulePath}/${params.id}/view` });
             }
-            if (path == '/nova_corretiva') {
-                if (id_role == 7) {
-                    return navigate({ pathname: `/corretivas` });
-                }
+        if (path == '/nova_corretiva') {
+            if (id_role == 7) {
+                return navigate({ pathname: `/corretivas` });
             }
+        }
+        if (path == '/nova_proativa') {
+            if (id_role == 7) {
+                return navigate({ pathname: `/proativas` });
+            }
+        }
         }
     }
     const ITEM_HEIGHT = 48;

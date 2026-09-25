@@ -18,6 +18,17 @@ export default function AdministrationCenter() {
     const supervisor = useSelector((state) => state.auth.user.supervisor);
     const id_role = useSelector((state) => state.auth.user.perfil_id);
 
+    const diasCriacaoChamados =
+        id_role == 1
+            ? [
+                  {
+                      title: 'Dias criação chamados',
+                      icon: <IconCalendar size={100} />,
+                      url: '/dias_criacao_chamados'
+                  }
+              ]
+            : [];
+
     if (supervisor === 1 || id_role == 4 || id_role == 7) {
         return (
             <>
@@ -28,11 +39,7 @@ export default function AdministrationCenter() {
                             icon: <IconBuildingCommunity size={100} />,
                             url: '/exportacao_chamados'
                         },
-                        {
-                            title: 'Dias criação chamados',
-                            icon: <IconCalendar size={100} />,
-                            url: '/dias_criacao_chamados'
-                        }
+                        ...diasCriacaoChamados
                     ]}
                 />
             </>
@@ -87,11 +94,7 @@ export default function AdministrationCenter() {
                             icon: <IconWindmill size={100} />,
                             url: '/tipo_problemas'
                         },
-                        {
-                            title: 'Dias criação chamados',
-                            icon: <IconCalendar size={100} />,
-                            url: '/dias_criacao_chamados'
-                        }
+                        ...diasCriacaoChamados
                     ]}
                 />
             </>

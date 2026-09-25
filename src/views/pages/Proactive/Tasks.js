@@ -185,6 +185,16 @@ export default function renderTasks(props) {
                                 <b>Tipo OS : </b>
                                 {desc.tipo_os}
                             </Typography>
+                            {props.moduleOs === 3 && id_role === 7 && (
+                                <Typography fontSize={15}>
+                                    <b>Classificação: </b>
+                                    {desc.classificacao_proativa === 'apontamento'
+                                        ? 'Apontamento'
+                                        : desc.classificacao_proativa === 'ocorrencia'
+                                        ? 'Ocorrência'
+                                        : ''}
+                                </Typography>
+                            )}
                             {props.moduleOs === 3 && id_role === 1 && props.onClassificacaoProativaChange && (
                                 <Box
                                     sx={{ mt: 1 }}

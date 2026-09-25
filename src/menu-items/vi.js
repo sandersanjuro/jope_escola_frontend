@@ -66,6 +66,16 @@ import {
         variant: 'success'
       },
       {
+        id: 'proativas',
+        title: 'OS Proativas',
+        type: 'item',
+        url: '/proativas',
+        icon: icons.IconListCheck,
+        breadcrumbs: false,
+        color: 'success',
+        variant: 'success'
+      },
+      {
         id: 'preventivas',
         title: 'OS Preventivas',
         type: 'item',

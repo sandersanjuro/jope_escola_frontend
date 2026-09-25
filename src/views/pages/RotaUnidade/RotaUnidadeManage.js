@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import MainCard from 'ui-component/cards/MainCard';
 import Loading from 'components/Loading/Loading';
 import {
@@ -36,6 +38,7 @@ function labelDia(nome) {
 }
 
 export default function RotaUnidadeManage() {
+    const id_role = useSelector((state) => state.auth.user.perfil_id);
     const [loading, setLoading] = useState(true);
     const [rotas, setRotas] = useState([]);
     const [units, setUnits] = useState([]);
@@ -65,8 +68,10 @@ export default function RotaUnidadeManage() {
     }, []);
 
     useEffect(() => {
-        load();
-    }, [load]);
+        if (id_role == 1) {
+            load();
+        }
+    }, [load, id_role]);
 
     const toggleRota = (unidadeId, rotaId) => {
         setSelections((prev) => {
@@ -109,6 +114,10 @@ export default function RotaUnidadeManage() {
             setSavingId(null);
         }
     };
+
+    if (id_role != 1) {
+        return <Navigate to="/administracoes" replace />;
+    }
 
     if (loading) {
         return <Loading />;
