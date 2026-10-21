@@ -96,6 +96,7 @@ const Unit = ({ ...others }) => {
                     nameUnit: resp.data.nameUnit,
                     idReg: resp.data.idReg,
                     modelUnit: resp.data.modelUnit,
+                    idModel: resp.data.idModel || '',
                     active: resp.data.active,
                     user_id: resp.data.user_id,
                     chave_ura: resp.data.chave_ura
