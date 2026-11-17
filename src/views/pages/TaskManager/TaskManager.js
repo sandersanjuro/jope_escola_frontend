@@ -938,7 +938,10 @@ const TaskManager = ({ ...others }) => {
                                                     type="text"
                                                     value={team}
                                                     name="team"
-                                                    onChange={(e, newValue) => setTeam(newValue)}
+                                                    onChange={(e, newValue) => {
+                                                        setTeam(newValue);
+                                                        setTechinal([]);
+                                                    }}
                                                     options={optionsTeam}
                                                     renderInput={(params) => <TextField {...params} label="Equipe" />}
                                                 />
@@ -964,13 +967,35 @@ const TaskManager = ({ ...others }) => {
                                                         renderValue={(selected) => selected.join(', ')}
                                                         MenuProps={MenuProps}
                                                     >
+                                                        {techinal
+                                                            .filter(
+                                                                (name) =>
+                                                                    !optionsTechinal.techinal.some((option) => option.label === name)
+                                                            )
+                                                            .map((name) => (
+                                                                <MenuItem key={`fora-equipe-${name}`} value={name}>
+                                                                    <Checkbox checked sx={{ pointerEvents: 'none' }} />
+                                                                    <ListItemText primary={name} />
+                                                                </MenuItem>
+                                                            ))}
                                                         {optionsTechinal.techinal.map((option) => (
                                                             <MenuItem key={option.id} value={option.label}>
-                                                                <Checkbox checked={techinal.indexOf(option.label) > -1} />
+                                                                <Checkbox
+                                                                    checked={techinal.indexOf(option.label) > -1}
+                                                                    sx={{ pointerEvents: 'none' }}
+                                                                />
                                                                 <ListItemText primary={option.label} />
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ mt: 1, alignSelf: 'flex-start' }}
+                                                        onClick={() => setTechinal([])}
+                                                        disabled={techinal.length === 0}
+                                                    >
+                                                        Limpar técnicos
+                                                    </Button>
                                                 </FormControl>
                                             </Grid>
                                             <Grid container alignItems="right" justifyContent="right" sx={{ mt: 3 }}>
