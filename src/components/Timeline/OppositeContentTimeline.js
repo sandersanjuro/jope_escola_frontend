@@ -9,8 +9,17 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { getBrlFormatDate } from 'utils/date';
 
+const timelineSortKey = (item) => item.created_at_ordenacao || item.created_at || '';
+
 export default function OppositeContentTimeline({ timeline = [], fim_atendimento, inicio_atendimento }) {
-    let itens = timeline || [];
+    const itens = [...(timeline || [])].sort((a, b) => {
+        const dataA = timelineSortKey(a);
+        const dataB = timelineSortKey(b);
+        if (dataA !== dataB) {
+            return dataA < dataB ? -1 : 1;
+        }
+        return (Number(a.id) || 0) - (Number(b.id) || 0);
+    });
     
     return (
         <React.Fragment>
